@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${title}">Main Page</title>
+    </head>
+
+    <body>
+        <header th:insert="~{blocks/header}"></header>
+        <nav th:insert="~{blocks/nav}"></nav>
+        <main>
+            <div th:each="product : ${products}">
+                <hr>
+                <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="100px" height="100px"/>
+                <p>
+                    <b>
+                        <span th:text="${product.getName()}"></span>
+                        <span th:text="'Coast: ' + ${product.getCoast()}"></span>
+                    </b>
+                </p>
+                <p th:text="${product.getDescription()}"></p>
+                <hr>
+            </div>
+
+            <div>
+                <a th:href="@{/catalog/menu/list/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
+
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
+
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
+            </div>
+        </main>
+        <footer th:insert="~{blocks/footer}"></footer>
+    </body>
+</html>

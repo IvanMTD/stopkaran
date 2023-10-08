@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Main Page</title>
+  </head>
+
+  <body>
+    <header th:insert="~{blocks/header}"></header>
+    <nav th:insert="~{blocks/nav}"></nav>
+    <main>
+      <h2>Меню Бара</h2>
+      <div th:each="category : ${categories}">
+        <hr>
+        <a th:href="@{/catalog/menu/{menuNumber}(menuNumber=${category.getId()})}">
+          <img th:src="'data:image/png;base64,' + ${category.getImage()}" width="10%" height="10%"/>
+          <p th:text="${category.getName()}"></p>
+          <p th:text="${category.getDescription()}"></p>
+        </a>
+        <hr>
+      </div>
+    </main>
+    <footer th:insert="~{blocks/footer}"></footer>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+    <title th:text="${title}">Main Page</title>
+    <link href="../static/css/info.css" th:href="@{/css/info.css}" rel="stylesheet"/>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=7c13cf7d-c937-4ca6-8021-145ac16bdcae&lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/js/map.js}"></script>
+  </head>
+
+  <body>
+    <header th:insert="~{blocks/header}"></header>
+    <nav th:insert="~{blocks/nav}"></nav>
+    <main>
+      <p>Бар Стоп Кран</p>
+      <p>Открыто до 00:00</p>
+      <p>+7 (916) 854-09-28</p>
+      <p>Новотушинский пр., 8, корп. 1</p>
+      <div id="map"></div>
+    </main>
+    <footer th:insert="~{blocks/footer}"></footer>
+  </body>
+</html>
