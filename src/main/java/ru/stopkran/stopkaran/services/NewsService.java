@@ -1,61 +1,35 @@
 package ru.stopkran.stopkaran.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.stopkran.stopkaran.models.News;
-import ru.stopkran.stopkaran.utils.ImageEncryptUtil;
+import ru.stopkran.stopkaran.repositories.NewsRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class NewsService {
 
-    private List<News> newsList;
+    private final NewsRepository newsRepository;
 
-    public NewsService(){
-        newsList = new ArrayList<>();
-        init();
-    }
-
-    private void init(){
-        String image = ImageEncryptUtil.loadImage("./src/main/resources/static/images/news_default.png");
-        for(int i=0; i<100; i++){
-            News news = new News();
-            news.setId(i);
-            news.setName("NAME"+i);
-            news.setAnnotation("ANNOTATION"+i);
-            news.setContent("CONTENT"+i);
-            news.setImage(image);
-            newsList.add(news);
-        }
-    }
 
     public List<News> findAllNewsByPageableSort(Pageable pageable) {
-        int pn = pageable.getPageNumber();
-        int ps = pageable.getPageSize();
-        int start = ps * pn;
-        int end = start + ps;
-        List<News> sortedNewsList = new ArrayList<>();
-        for(int i=start; i<end; i++){
-            if(i < newsList.size()) {
-                sortedNewsList.add(newsList.get(i));
-            }
-        }
-        return sortedNewsList;
+        return newsRepository.findAll(pageable);
     }
 
     public List<News> findAll() {
-        return newsList;
+        return newsRepository.findAll();
     }
 
     public News findById(long id) {
-        for(News news : newsList){
-            if(news.getId() == id){
-                return news;
-            }
-        }
-        return null;
+        Optional<News> optionalNews = newsRepository.findById(id);
+        return optionalNews.orElse(null);
+    }
+
+    public void save(News news){
+        newsRepository.save(news);
     }
 }

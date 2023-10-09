@@ -1,0 +1,23 @@
+create table if not exists news (
+    id long primary key auto_increment,
+    name text not null,
+    annotation text not null,
+    content text not null,
+    image text not null,
+    placed_at timestamp not null
+);
+
+create table if not exists product (
+    id long primary key auto_increment,
+    name text not null,
+    description text not null,
+    coast bigint not null,
+    image text not null
+);
+
+create table if not exists category (
+    id long primary key auto_increment,
+    name text not null,
+    description text not null,
+    image text not null
+);

@@ -1,16 +1,30 @@
 package ru.stopkran.stopkaran.models;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-@RequiredArgsConstructor
-public class Product {
+@Table(name = "product")
+@Entity
+@NoArgsConstructor(force = true)
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "coast")
     private BigDecimal coast;
+    @Column(name = "image")
     private String image;
 }
