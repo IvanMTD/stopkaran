@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.stopkran.stopkaran.models.Product;
-import ru.stopkran.stopkaran.services.CategoryServices;
+import ru.stopkran.stopkaran.services.CategoryService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CatalogController {
 
-    private final CategoryServices categoryServices;
+    private final CategoryService categoryService;
     List<Product> products;
     private int menuNumber;
 
@@ -32,14 +31,14 @@ public class CatalogController {
 
     @GetMapping("/menu")
     public String categoryPage(Model model){
-        model.addAttribute("categories",categoryServices.findAll());
+        model.addAttribute("categories", categoryService.findAll());
         return "catalog/menu";
     }
 
     @GetMapping("/menu/{menuNumber}")
     public String redirectOnMenu(@PathVariable("menuNumber") int menuNumber){
         this.menuNumber = menuNumber;
-        products = categoryServices.findAll().get(menuNumber).getProducts();
+        products = categoryService.findAll().get(menuNumber).getProducts();
         return "redirect:/catalog/menu/list/0";
     }
 
@@ -52,11 +51,19 @@ public class CatalogController {
             pageTotal = products.size() / pageSize;
         }
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
-        model.addAttribute("products",categoryServices.findAllProductsByPageableSort(pageable,menuNumber));
+        model.addAttribute("products", categoryService.findAllProductsByPageableSort(pageable,menuNumber));
         model.addAttribute("pageTotal",pageTotal);
         model.addAttribute("pageNumber",pageNumber);
         model.addAttribute("pageSize",pageSize);
+        model.addAttribute("category", categoryService.findAll().get(menuNumber));
         return "catalog/list";
+    }
+
+    @GetMapping("/{menuNum}/{productNum}")
+    public String productPage(Model model, @PathVariable("menuNum") int categoryId, @PathVariable("productNum") int productId){
+        Product product = categoryService.findAll().get(categoryId).getProducts().get(productId);
+        model.addAttribute("product",product);
+        return "catalog/product";
     }
 
     @ModelAttribute(name = "title")

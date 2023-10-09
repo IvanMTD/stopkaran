@@ -1,6 +1,5 @@
 package ru.stopkran.stopkaran.services;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.stopkran.stopkaran.models.Category;
@@ -12,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CategoryServices {
+public class CategoryService {
     private List<Category> categories;
 
-    public CategoryServices(){
+    public CategoryService(){
         categories = new ArrayList<>();
         init();
     }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Main Page</title>
+  </head>
+
+  <body>
+    <header th:insert="~{blocks/header}"></header>
+    <nav th:insert="~{blocks/nav}"></nav>
+    <main>
+      <div>
+        <hr>
+        <img th:src="'data:image/png;base64,' + ${news.getImage()}" width="300px" height="300px"/>
+        <h2 th:text="${news.getName()}"></h2>
+        <p th:text="${news.getContent()}"></p>
+        <hr>
+      </div>
+    </main>
+    <footer th:insert="~{blocks/footer}"></footer>
+  </body>
+</html>
