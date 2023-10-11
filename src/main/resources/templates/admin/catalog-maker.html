@@ -10,15 +10,28 @@
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
             <div>
+                <hr>
+                <h2>Работа с каталогами</h2>
+                <hr>
+            </div>
+            <div>
+                <a th:href="@{/admin}">Вернуться</a>
+                <hr>
                 <form th:method="POST" th:action="@{/admin/catalog/add}" th:object="${category}" enctype="multipart/form-data">
                     <label for="file">Изображение: </label>
                     <input type="file" accept="image/png" id="file" name="file"><br>
+
                     <label for="name">Название каталога: </label>
-                    <input type="text" id="name" th:field="*{name}"><br>
+                    <input type="text" id="name" th:field="*{name}">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
+
                     <label for="description">Описание каталога: </label>
-                    <input type="text" id="description" th:field="*{description}"><br>
+                    <input type="text" id="description" th:field="*{description}">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description error</span><br>
+
                     <input type="submit" value="Подтвердить">
                 </form>
+                <hr>
             </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>

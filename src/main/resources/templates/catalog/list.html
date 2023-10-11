@@ -11,15 +11,13 @@
         <main>
             <h2 th:text="${category.getName()}"></h2>
             <p th:text="${category.getDescription()}"></p>
-            <a th:href="@{/catalog/menu}">Вернуться</a>
+            <p><a th:href="@{/catalog/menu}">Вернуться</a></p>
 
-            <div>
+            <div th:if="${pageTotal}!=0">
                 <a th:href="@{/catalog/menu/list/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
             </div>
 
@@ -30,24 +28,21 @@
                     <p>
                         <b>
                             <span th:text="${product.getName()}"></span>
-                            <span th:text="'Coast: ' + ${product.getCoast()}"></span>
+                            <span th:text="'Цена: ' + ${product.getCoast()}"></span>
                         </b>
                     </p>
-                    <p th:text="${product.getDescription()}"></p>
                 </a>
                 <hr>
             </div>
 
-            <div>
+            <div th:if="${pageTotal}!=0">
                 <a th:href="@{/catalog/menu/list/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
             </div>
-            <a th:href="@{/catalog/menu}">Вернуться</a>
+            <p><a th:href="@{/catalog/menu}">Вернуться</a></p>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
     </body>

@@ -1,6 +1,9 @@
 package ru.stopkran.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,10 +22,13 @@ public class Product implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank(message = "Поле не может быть пустым")
     @Column(name = "name")
     private String name;
+    @NotBlank(message = "Поле не может быть пустым")
     @Column(name = "description")
     private String description;
+    @NotNull(message = "Не может быть пустым")
     @Column(name = "coast")
     private BigDecimal coast;
     @Column(name = "image")

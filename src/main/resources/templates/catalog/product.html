@@ -9,7 +9,9 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a>
+            <hr>
+            <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a><br>
+            <hr>
             <div>
                 <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="300px" height="300px"/>
                 <h2 th:text="${product.getName()}"></h2>

@@ -10,13 +10,11 @@
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
             <h1>Новости Бара</h1>
-            <div>
+            <div th:if="${pageTotal}!=0">
                 <a th:href="@{/news/page/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
             </div>
             <div th:each="news : ${newsList}">
@@ -28,13 +26,11 @@
                 </a>
                 <hr>
             </div>
-            <div>
+            <div th:if="${pageTotal}!=0">
                 <a th:href="@{/news/page/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-
                 <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
             </div>
         </main>

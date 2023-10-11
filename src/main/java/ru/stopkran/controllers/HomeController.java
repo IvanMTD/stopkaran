@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ public class HomeController {
     private int pageSize = 6;
     private int pageTotal;
 
+    private int lastPage;
+
     @GetMapping()
     public String homePage(Model model){
         int diff = newsService.findAll().size() % pageSize;
@@ -39,6 +43,7 @@ public class HomeController {
 
     @GetMapping("/news/page/{pageNumber}")
     public String newsListPage(Model model, @PathVariable("pageNumber") int pageNumber){
+        lastPage = pageNumber;
         setPageNumber(pageNumber);
         int diff = newsService.findAll().size() % pageSize;
         if(diff > 0){
@@ -56,6 +61,7 @@ public class HomeController {
     @GetMapping("/news/{id}")
     public String newsPage(Model model, @PathVariable("id") int id){
         model.addAttribute("news",newsService.findById(id));
+        model.addAttribute("lastPage",lastPage);
         return "news/information";
     }
 
@@ -67,5 +73,18 @@ public class HomeController {
     @ModelAttribute(name = "title")
     public String title(){
         return "Home Page";
+    }
+
+    @ModelAttribute(name = "auth")
+    public boolean auth(@AuthenticationPrincipal User user){
+        if(user != null){
+            if(user.getAuthorities().stream().filter(a -> a.getAuthority().equals("ROLE_ADMIN")).findFirst().isPresent()){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

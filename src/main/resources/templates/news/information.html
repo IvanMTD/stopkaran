@@ -9,6 +9,9 @@
     <header th:insert="~{blocks/header}"></header>
     <nav th:insert="~{blocks/nav}"></nav>
     <main>
+      <hr>
+      <a th:href="@{/news/page/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a><br>
+      <a th:href="@{/news/edit/{id}(id=${news.getId()})}" th:if="${auth}">Редактировать</a>
       <div>
         <hr>
         <p th:text="${news.getPlacedAt()}"></p>
