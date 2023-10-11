@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${title}">Main Page</title>
+    </head>
+
+    <body>
+        <header th:insert="~{blocks/header}"></header>
+        <nav th:insert="~{blocks/nav}"></nav>
+        <main>
+            <div>
+                <form th:method="POST" th:action="@{/admin/catalog/add}" th:object="${category}" enctype="multipart/form-data">
+                    <label for="file">Изображение: </label>
+                    <input type="file" accept="image/png" id="file" name="file"><br>
+                    <label for="name">Название каталога: </label>
+                    <input type="text" id="name" th:field="*{name}"><br>
+                    <label for="description">Описание каталога: </label>
+                    <input type="text" id="description" th:field="*{description}"><br>
+                    <input type="submit" value="Подтвердить">
+                </form>
+            </div>
+        </main>
+        <footer th:insert="~{blocks/footer}"></footer>
+    </body>
+</html>

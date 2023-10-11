@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${title}">Main Page</title>
+    </head>
+
+    <body>
+        <header th:insert="~{blocks/header}"></header>
+        <nav th:insert="~{blocks/nav}"></nav>
+        <main>
+            <div>
+                <hr>
+                <h1>Работа с новостями</h1>
+                <hr>
+            </div>
+            <div>
+                <form th:method="POST" th:action="@{/admin/news/add}" th:object="${news}" enctype="multipart/form-data">
+                    <label for="file">Изображение: </label>
+                    <input type="file" accept="image/png" id="file" name="file"><br>
+                    <label for="name">Название новости: </label>
+                    <input type="text" id="name" th:field="*{name}"><br>
+                    <label for="annotation">Короткая аннотация: </label>
+                    <input type="text" id="annotation" th:field="*{annotation}"><br>
+                    <label for="content">Содержание: </label>
+                    <textarea id="content" cols="40" rows="20" th:field="*{content}"/><br>
+                    <input type="submit" value="Подтвердить">
+                </form>
+                <hr>
+            </div>
+        </main>
+        <footer th:insert="~{blocks/footer}"></footer>
+    </body>
+</html>

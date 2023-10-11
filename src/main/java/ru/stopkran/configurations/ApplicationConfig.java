@@ -12,6 +12,7 @@ import ru.stopkran.repositories.ProductRepository;
 import ru.stopkran.utils.ImageEncryptUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -21,22 +22,19 @@ public class ApplicationConfig {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                //newsRepository.save(getTestNews());
-                /*for(int i=0; i<3; i++){
-                    List<Product> productList = new ArrayList<>();
-                    for(int j=0; j<30; j++){
-                        productList.add(getTestProduct((i+1) * (j+1)));
-                    }
-                    productRepository.saveAll(productList.stream().toList());
+                /*newsRepository.save(getTestNews());
+                for(int i=0; i<3; i++){
                     categoryRepository.save(getTestCategory(i,new ArrayList<>()));
-                }*/
-                /*List<Category> categoryList = categoryRepository.findAll();
+                }
+                List<Category> categoryList = categoryRepository.findAll();
                 for(Category category : categoryList){
+                    int random = 5 + (int)(Math.round(Math.random() * 20.0f));
                     List<Product> products = new ArrayList<>();
-                    for(int i=0; i<30; i++){
-                        productRepository.save(getTestProduct(i));
+                    for(int i=0; i< random; i++){
+                        products.add(getTestProduct(i));
                     }
-                    category.setProducts(productRepository.findAll());
+                    productRepository.saveAll(products);
+                    category.setProducts(products);
                     categoryRepository.save(category);
                 }*/
             }
@@ -45,9 +43,9 @@ public class ApplicationConfig {
 
     private News getTestNews(){
         News news = new News();
-        news.setName("Имя новости");
-        news.setAnnotation("Это простая аннотация для новостей");
-        news.setContent("Некий контент для новостей из разных источников. Для вашего удовольствия!");
+        news.setName("Открытие Бара");
+        news.setAnnotation("Ждем Вас в гости. Бар работает до 00:00");
+        news.setContent("Просто хорошая новость об открытии Бара. Ждём вас в гости.");
         news.setImage(ImageEncryptUtil.loadImage("./src/main/resources/static/images/news_default.png"));
         return news;
     }

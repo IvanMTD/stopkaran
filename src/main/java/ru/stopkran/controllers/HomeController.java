@@ -59,6 +59,11 @@ public class HomeController {
         return "news/information";
     }
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "admin/login";
+    }
+
     @ModelAttribute(name = "title")
     public String title(){
         return "Home Page";

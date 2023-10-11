@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${title}">Main Page</title>
+    </head>
+
+    <body>
+        <header th:insert="~{blocks/header}"></header>
+        <nav th:insert="~{blocks/nav}"></nav>
+        <main>
+            <hr>
+            <h1>Администратор бара</h1>
+            <hr>
+            <a th:href="@{/admin/news}">Работа с новостями</a><br>
+            <a th:href="@{/admin/catalog}">Работа с категориями меню</a><br>
+            <a th:href="@{/admin/products}">Работа с продуктами</a>
+            <hr>
+        </main>
+        <footer th:insert="~{blocks/footer}"></footer>
+    </body>
+</html>
