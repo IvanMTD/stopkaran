@@ -1,12 +1,12 @@
-package ru.stopkran.stopkaran.services;
+package ru.stopkran.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.stopkran.stopkaran.models.Category;
-import ru.stopkran.stopkaran.models.Product;
-import ru.stopkran.stopkaran.repositories.CategoryRepository;
-import ru.stopkran.stopkaran.repositories.ProductRepository;
+import ru.stopkran.models.Category;
+import ru.stopkran.models.Product;
+import ru.stopkran.repositories.CategoryRepository;
+import ru.stopkran.repositories.ProductRepository;
 
 import java.util.List;
 
@@ -24,5 +24,9 @@ public class CategoryService {
 
     public List<Category> findAll() {
         return categoryRepository.findAll();
+    }
+
+    public Category findById(long id) {
+        return categoryRepository.findById(id).orElse(null);
     }
 }

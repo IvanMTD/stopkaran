@@ -3,7 +3,7 @@ create table if not exists news (
     name text not null,
     annotation text not null,
     content text not null,
-    image text not null,
+    image blob not null,
     placed_at timestamp not null
 );
 
@@ -20,4 +20,9 @@ create table if not exists category (
     name text not null,
     description text not null,
     image text not null
+);
+
+create table if not exists category_products (
+    category_id long,
+    products_id long
 );

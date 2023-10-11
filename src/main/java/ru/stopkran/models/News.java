@@ -1,17 +1,17 @@
-package ru.stopkran.stopkaran.models;
+package ru.stopkran.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "category")
+@Table(name = "news")
 @NoArgsConstructor(force = true)
-public class Category implements Serializable {
+public class News implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -21,10 +21,17 @@ public class Category implements Serializable {
     private long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "annotation")
+    private String annotation;
+    @Column(name = "content")
+    private String content;
     @Column(name = "image")
+    //@Lob
     private String image;
-    @ManyToMany(targetEntity = Product.class)
-    private List<Product> products;
+    @Column(name = "placed_at")
+    private Date placedAt;
+    @PrePersist
+    void placedAt() {
+        this.placedAt = new Date();
+    }
 }

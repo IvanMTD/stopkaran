@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran;
+package ru.stopkran;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

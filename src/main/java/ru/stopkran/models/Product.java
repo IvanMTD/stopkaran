@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran.models;
+package ru.stopkran.models;
 
 import jakarta.persistence.*;
 import lombok.Data;

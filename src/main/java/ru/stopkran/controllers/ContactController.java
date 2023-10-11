@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran.controllers;
+package ru.stopkran.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/about")
-public class AboutController {
+@RequestMapping("/contact")
+public class ContactController {
 
     @GetMapping()
-    public String aboutPage(){
-        return "about/detail";
+    public String contactPage(){
+        return "contact/info";
     }
 
-    @ModelAttribute(name = "About Page")
+    @ModelAttribute(name = "title")
     public String title(){
-        return "About Page";
+        return "Contact Page";
     }
 }

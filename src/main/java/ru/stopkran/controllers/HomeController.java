@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran.controllers;
+package ru.stopkran.controllers;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.stopkran.stopkaran.services.NewsService;
+import ru.stopkran.services.NewsService;
 
 @Data
 @Controller

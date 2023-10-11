@@ -1,8 +1,8 @@
-package ru.stopkran.stopkaran.repositories;
+package ru.stopkran.repositories;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
-import ru.stopkran.stopkaran.models.News;
+import ru.stopkran.models.News;
 
 import java.util.List;
 

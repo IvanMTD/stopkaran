@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran.configurations;
+package ru.stopkran.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

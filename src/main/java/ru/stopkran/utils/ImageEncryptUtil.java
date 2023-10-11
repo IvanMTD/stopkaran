@@ -1,4 +1,4 @@
-package ru.stopkran.stopkaran.utils;
+package ru.stopkran.utils;
 
 import java.io.File;
 import java.io.IOException;

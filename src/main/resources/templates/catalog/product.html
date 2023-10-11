@@ -9,13 +9,16 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="300px" height="300px"/>
-            <h2 th:text="${product.getName()}"></h2>
-            <p th:text="${product.getDescription()}"></p>
-            <br>
-            <hr>
-            <p th:text="'Цена: ' + ${product.getCoast()}"></p>
-            <hr>
+            <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a>
+            <div>
+                <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="300px" height="300px"/>
+                <h2 th:text="${product.getName()}"></h2>
+                <p th:text="${product.getDescription()}"></p>
+                <br>
+                <hr>
+                <p th:text="'Цена: ' + ${product.getCoast()}"></p>
+                <hr>
+            </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
     </body>
