@@ -32,4 +32,8 @@ public class NewsService {
     public void save(News news){
         newsRepository.save(news);
     }
+
+    public void delete(long id) {
+        newsRepository.deleteById(id);
+    }
 }

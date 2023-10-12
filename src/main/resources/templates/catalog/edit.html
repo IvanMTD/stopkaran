@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${title}">Main Page</title>
+    </head>
+
+    <body>
+        <header th:insert="~{blocks/header}"></header>
+        <nav th:insert="~{blocks/nav}"></nav>
+        <main>
+            <div>
+                <hr>
+                <h2>Редактор продукта</h2>
+                <hr>
+            </div>
+            <div>
+                <form th:method="POST" th:action="@{/product/edit/{id}(id=${product.getId()})}" th:object="${product}" enctype="multipart/form-data">
+                    <label for="file">Изображение: </label>
+                    <input type="file" accept="image/png" id="file" name="file"><br>
+
+                    <label for="name">Название продукта: </label>
+                    <input type="text" th:field="*{name}" id="name">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
+
+                    <label for="description">Описание продукта: </label>
+                    <input type="text" th:field="*{description}" id="description">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description error</span><br>
+
+                    <label for="coast">Цена: </label>
+                    <input type="number" th:field="*{coast}" id="coast">
+                    <span th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}" style="color: red">Coast error</span><br>
+
+                    <label for="select">Категория: </label>
+                    <select id="select" name="select">
+                        <option
+                            th:each="category : ${categoryList}"
+                            th:text="${category.getName()}"
+                            th:value="${category.getId()}"
+                        ></option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Редактировать">
+                </form>
+                <hr>
+            </div>
+        </main>
+        <footer th:insert="~{blocks/footer}"></footer>
+    </body>
+</html>

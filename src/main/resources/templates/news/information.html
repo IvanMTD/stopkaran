@@ -12,6 +12,7 @@
       <hr>
       <a th:href="@{/news/page/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a><br>
       <a th:href="@{/news/edit/{id}(id=${news.getId()})}" th:if="${auth}">Редактировать</a>
+      <a th:href="@{/news/delete/{id}(id=${news.getId()})}" th:if="${auth}">Удалить</a>
       <div>
         <hr>
         <p th:text="${news.getPlacedAt()}"></p>

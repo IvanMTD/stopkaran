@@ -1,19 +1,25 @@
 package ru.stopkran.controllers;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.stopkran.models.Category;
 import ru.stopkran.models.Product;
 import ru.stopkran.services.CategoryService;
+import ru.stopkran.services.ProductService;
+import ru.stopkran.utils.ImageEncryptUtil;
 
+import java.io.IOException;
 import java.util.List;
 
 @Data
@@ -23,6 +29,7 @@ import java.util.List;
 public class CatalogController {
 
     private final CategoryService categoryService;
+    private final ProductService productService;
     List<Product> products;
     private int menuNumber;
 
@@ -31,6 +38,7 @@ public class CatalogController {
     private int pageTotal;
 
     private int lastPage;
+    private int lastCategoryId;
 
     @GetMapping("/menu")
     public String categoryPage(Model model){
@@ -72,8 +80,63 @@ public class CatalogController {
         return "catalog/product";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/edit/{id}")
+    public String productEditPage(Model model, @PathVariable("id") long id){
+        model.addAttribute("product", productService.findById(id));
+        model.addAttribute("categoryList",categoryService.findAll());
+        return "catalog/edit";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/edit/{id}")
+    public String productEdit(
+            @PathVariable("id") long id,
+            @ModelAttribute(name = "product") @Valid Product product,
+            Errors errors,
+            @RequestParam(name = "select") long categoryId,
+            @RequestPart(name = "file")MultipartFile file
+    ){
+        if(errors.hasErrors()){
+            return "catalog/edit";
+        }
+
+        Product newProduct = new Product();
+        if(!file.isEmpty()){
+            try {
+                newProduct.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            newProduct.setImage(product.getImage());
+        }
+        newProduct.setName(product.getName());
+        newProduct.setDescription(product.getDescription());
+        newProduct.setCoast(product.getCoast());
+        productService.delete(product.getId());
+        productService.save(newProduct);
+        Category category = categoryService.findById(categoryId);
+        category.getProducts().add(productService.findById(product.getId()));
+        categoryService.save(category);
+        return "catalog/edit";
+    }
+
     @ModelAttribute(name = "title")
     public String title(){
         return "Catalog Page";
+    }
+
+    @ModelAttribute(name = "auth")
+    public boolean auth(@AuthenticationPrincipal User user){
+        if(user != null){
+            if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

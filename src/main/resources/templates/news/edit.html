@@ -9,7 +9,30 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
+            <div>
+                <h2>Редактор новостей</h2>
+                <hr>
+            </div>
+            <div>
+                <form th:method="POST" th:action="@{/news/edit/{id}(id=${news.getId()})}" th:object="${news}" enctype="multipart/form-data">
+                    <label for="file">Изображение: </label>
+                    <input type="file" accept="image/png" id="file" name="file"><br>
 
+                    <label for="name">Название новости: </label>
+                    <input type="text" id="name" th:field="*{name}">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
+
+                    <label for="annotation">Короткая аннотация: </label>
+                    <input type="text" id="annotation" th:field="*{annotation}">
+                    <span th:if="${#fields.hasErrors('annotation')}" th:errors="*{annotation}" style="color: red">Annotation error</span><br>
+
+                    <label for="content">Содержание: </label>
+                    <textarea id="content" cols="40" rows="20" th:field="*{content}"/>
+                    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red">Content error</span><br>
+
+                    <input type="submit" value="Подтвердить">
+                </form>
+            </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
     </body>

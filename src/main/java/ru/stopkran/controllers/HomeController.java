@@ -1,17 +1,25 @@
 package ru.stopkran.controllers;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.stopkran.models.News;
 import ru.stopkran.services.NewsService;
+import ru.stopkran.utils.ImageEncryptUtil;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Controller
@@ -65,6 +73,42 @@ public class HomeController {
         return "news/information";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/news/edit/{id}")
+    public String editNewsPage(Model model, @PathVariable("id") long id){
+        model.addAttribute("news", newsService.findById(id));
+        return "news/edit";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/news/edit/{id}")
+    public String editNewsPage(@PathVariable("id") long id, @ModelAttribute(name = "news") @Valid News news, Errors errors, @RequestPart(name = "file") MultipartFile file){
+        if(errors.hasErrors()){
+            return "news/edit";
+        }
+        News original = newsService.findById(id);
+        if(!file.isEmpty()){
+            try {
+                original.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        original.setName(news.getName());
+        original.setAnnotation(news.getAnnotation());
+        original.setContent(news.getContent());
+        original.setPlacedAt(new Date());
+        newsService.save(original);
+        return "redirect:/news/" + id;
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/news/delete/{id}")
+    public String deleteNews(@PathVariable("id") long id){
+        newsService.delete(id);
+        return "redirect:/news/page/0";
+    }
+
     @GetMapping("/login")
     public String loginPage(){
         return "admin/login";
@@ -78,7 +122,7 @@ public class HomeController {
     @ModelAttribute(name = "auth")
     public boolean auth(@AuthenticationPrincipal User user){
         if(user != null){
-            if(user.getAuthorities().stream().filter(a -> a.getAuthority().equals("ROLE_ADMIN")).findFirst().isPresent()){
+            if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
                 return true;
             }else{
                 return false;

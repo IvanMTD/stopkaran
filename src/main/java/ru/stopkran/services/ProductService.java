@@ -19,4 +19,12 @@ public class ProductService {
     public List<Product> findAll(){
         return productRepository.findAll();
     }
+
+    public Product findById(long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public void delete(long id) {
+        productRepository.deleteById(id);
+    }
 }
