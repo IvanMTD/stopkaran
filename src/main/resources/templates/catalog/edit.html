@@ -15,7 +15,7 @@
                 <hr>
             </div>
             <div>
-                <form th:method="POST" th:action="@{/product/edit/{id}(id=${product.getId()})}" th:object="${product}" enctype="multipart/form-data">
+                <form th:method="POST" th:action="@{/catalog/product/edit/{id}(id=${product.getId()})}" th:object="${product}" enctype="multipart/form-data">
                     <label for="file">Изображение: </label>
                     <input type="file" accept="image/png" id="file" name="file"><br>
 
@@ -31,15 +31,6 @@
                     <input type="number" th:field="*{coast}" id="coast">
                     <span th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}" style="color: red">Coast error</span><br>
 
-                    <label for="select">Категория: </label>
-                    <select id="select" name="select">
-                        <option
-                            th:each="category : ${categoryList}"
-                            th:text="${category.getName()}"
-                            th:value="${category.getId()}"
-                        ></option>
-                    </select>
-                    <br>
                     <input type="submit" value="Редактировать">
                 </form>
                 <hr>

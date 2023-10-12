@@ -11,8 +11,8 @@
         <main>
             <hr>
             <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${lastPage})}">Вернуться</a><br>
-            <a th:href="@{/catalog/edit/{id}(id=${product.getId()})}" th:if="${auth}">Редактировать</a>
-            <a th:href="@{/catalog/delete/{id}(id=${product.getId()})}" th:if="${auth}">Удалить</a>
+            <a th:href="@{/catalog/product/edit/{id}(id=${product.getId()})}" th:if="${auth}">Редактировать</a>
+            <a th:href="@{/catalog/product/delete/{id}(id=${product.getId()})}" th:if="${auth}">Удалить</a>
             <hr>
             <div>
                 <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="300px" height="300px"/>

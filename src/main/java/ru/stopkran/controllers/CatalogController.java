@@ -81,7 +81,7 @@ public class CatalogController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/edit/{id}")
+    @GetMapping("/product/edit/{id}")
     public String productEditPage(Model model, @PathVariable("id") long id){
         model.addAttribute("product", productService.findById(id));
         model.addAttribute("categoryList",categoryService.findAll());
@@ -89,37 +89,37 @@ public class CatalogController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/edit/{id}")
+    @PostMapping("/product/edit/{id}")
     public String productEdit(
             @PathVariable("id") long id,
             @ModelAttribute(name = "product") @Valid Product product,
             Errors errors,
-            @RequestParam(name = "select") long categoryId,
             @RequestPart(name = "file")MultipartFile file
     ){
         if(errors.hasErrors()){
             return "catalog/edit";
         }
 
-        Product newProduct = new Product();
+        Product origin = productService.findById(id);
         if(!file.isEmpty()){
             try {
-                newProduct.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
+                origin.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }else{
-            newProduct.setImage(product.getImage());
         }
-        newProduct.setName(product.getName());
-        newProduct.setDescription(product.getDescription());
-        newProduct.setCoast(product.getCoast());
-        productService.delete(product.getId());
-        productService.save(newProduct);
-        Category category = categoryService.findById(categoryId);
-        category.getProducts().add(productService.findById(product.getId()));
-        categoryService.save(category);
-        return "catalog/edit";
+        origin.setName(product.getName());
+        origin.setDescription(product.getDescription());
+        origin.setCoast(product.getCoast());
+        productService.save(origin);
+        return "redirect:/catalog/menu";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable(name = "id") long id){
+        productService.delete(id);
+        return "redirect:/catalog/menu";
     }
 
     @ModelAttribute(name = "title")

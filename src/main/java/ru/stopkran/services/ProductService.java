@@ -12,8 +12,8 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public void save(Product product){
-        productRepository.save(product);
+    public Product save(Product product){
+        return productRepository.save(product);
     }
 
     public List<Product> findAll(){

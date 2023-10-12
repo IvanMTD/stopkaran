@@ -117,10 +117,8 @@ public class AdminController {
                 throw new RuntimeException(e);
             }
         }
+        product.setCategory(categoryService.findById(id));
         productService.save(product);
-        Category category = categoryService.findById(id);
-        category.getProducts().add(product);
-        categoryService.save(category);
         return "redirect:/admin";
     }
 

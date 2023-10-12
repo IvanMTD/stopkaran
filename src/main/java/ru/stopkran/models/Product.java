@@ -33,4 +33,7 @@ public class Product implements Serializable {
     private BigDecimal coast;
     @Column(name = "image")
     private String image;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 }

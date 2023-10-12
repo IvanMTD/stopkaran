@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,8 @@ public class Category implements Serializable {
     private String description;
     @Column(name = "image")
     private String image;
-    @ManyToMany(targetEntity = Product.class, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER) //targetEntity = Product.class, fetch = FetchType.EAGER
+    @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
     private List<Product> products;
 }
