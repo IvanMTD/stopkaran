@@ -33,6 +33,22 @@
                 </form>
                 <hr>
             </div>
+            <div>
+                <hr>
+                <h2>Удаление категории</h2>
+                <p>Все продукты в категории будут перемещены на склад</p>
+                <form th:method="POST" th:action="@{/admin/catalog/delete}">
+                    <select id="select" name="select">
+                        <option
+                        th:each="category : ${categories}"
+                        th:text="${category.getName()}"
+                        th:value="${category.getId()}"
+                        ></option>
+                    </select>
+                    <input type="submit" value="Удалить">
+                </form>
+                <hr>
+            </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
     </body>

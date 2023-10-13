@@ -94,7 +94,8 @@ public class CatalogController {
             @PathVariable("id") long id,
             @ModelAttribute(name = "product") @Valid Product product,
             Errors errors,
-            @RequestPart(name = "file")MultipartFile file
+            @RequestPart(name = "file")MultipartFile file,
+            @RequestParam(name = "select") long categoryId
     ){
         if(errors.hasErrors()){
             return "catalog/edit";
@@ -111,6 +112,7 @@ public class CatalogController {
         origin.setName(product.getName());
         origin.setDescription(product.getDescription());
         origin.setCoast(product.getCoast());
+        origin.setCategory(categoryService.findById(categoryId));
         productService.save(origin);
         return "redirect:/catalog/menu";
     }

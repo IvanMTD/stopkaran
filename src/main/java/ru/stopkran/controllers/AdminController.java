@@ -18,6 +18,7 @@ import ru.stopkran.utils.ImageEncryptUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -64,6 +65,9 @@ public class AdminController {
     @GetMapping("/catalog")
     public String adminCatalogPage(Model model){
         model.addAttribute("category", new Category());
+        List<Category> categories = categoryService.findAll();
+        categories.remove(0);
+        model.addAttribute("categories", categories);
         return "admin/catalog-maker";
     }
 
@@ -84,6 +88,22 @@ public class AdminController {
         }
         category.setProducts(new ArrayList<>());
         categoryService.save(category);
+        return "redirect:/admin";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/catalog/delete")
+    public String deleteCatalog(@RequestParam(name = "select") long id){
+        Category category = categoryService.findById(id);
+        System.out.println("Категори " + category.getName() + " будет удалена");
+        for(Product product : category.getProducts()){
+            Product p = productService.findById(product.getId());
+            System.out.println("Продукт " + p.getName() + " будет перенесен в " + categoryService.findById(1).getName());
+            p.setCategory(categoryService.findById(1));
+            productService.save(p);
+            System.out.println("Перенесено в " + productService.findById(product.getId()).getCategory().getName());
+        }
+        categoryService.delete(category);
         return "redirect:/admin";
     }
 

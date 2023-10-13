@@ -40,8 +40,8 @@ public class SecurityConfig {
         List<UserDetails> usersList = new ArrayList<>();
         usersList.add(
                 new User(
-                        "bar_admin",
-                        encoder.encode("$t0Ng_PA$$w0rD"),
+                        "admin",
+                        encoder.encode("admin"),
                         Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))
                 )
         );

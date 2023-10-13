@@ -10,7 +10,18 @@
     <nav th:insert="~{blocks/nav}"></nav>
     <main>
       <h2>Меню Бара</h2>
-      <div th:each="category : ${categories}">
+      <div th:each="cat : ${categories}" th:if="${cat.getId()} == 1">
+        <div th:if="${auth}">
+          <hr>
+          <a th:href="@{/catalog/menu/{menuNumber}(menuNumber=${cat.getId()})}">
+            <img th:src="'data:image/png;base64,' + ${cat.getImage()}" width="10%" height="10%"/>
+            <p th:text="${cat.getName()}"></p>
+            <p th:text="${cat.getDescription()}"></p>
+          </a>
+          <hr>
+        </div>
+      </div>
+      <div th:each="category : ${categories}" th:if="${category.getId()} != 1">
         <hr>
         <a th:href="@{/catalog/menu/{menuNumber}(menuNumber=${category.getId()})}">
           <img th:src="'data:image/png;base64,' + ${category.getImage()}" width="10%" height="10%"/>

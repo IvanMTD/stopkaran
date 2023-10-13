@@ -31,6 +31,6 @@ public class Category implements Serializable {
     private String image;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER) //targetEntity = Product.class, fetch = FetchType.EAGER
-    @Cascade({org.hibernate.annotations.CascadeType.REMOVE})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private List<Product> products;
 }
