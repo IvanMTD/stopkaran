@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +32,10 @@ public class SecurityConfig {
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
                         .defaultSuccessUrl("/admin, true")
+                )
+                .logout(LogoutConfigurer -> LogoutConfigurer
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
                 )
                 .build();
     }

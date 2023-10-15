@@ -14,38 +14,25 @@
         <main>
             <div>
                 <hr>
-                <h2>Работа с продуктами</h2>
+                <h2>Редактор каталога</h2>
                 <hr>
             </div>
             <div>
                 <a th:href="@{/admin}">Вернуться</a>
                 <hr>
-                <form th:method="POST" th:action="@{/admin/products/add}" th:object="${product}" enctype="multipart/form-data">
+                <form th:method="POST" th:action="@{/admin/catalog/edit/{id}(id=${category.getId()})}" th:object="${category}" enctype="multipart/form-data">
                     <label for="file">Изображение: </label>
                     <input type="file" accept="image/png" id="file" name="file"><br>
 
-                    <label for="name">Название продукта: </label>
-                    <input type="text" th:field="*{name}" id="name">
+                    <label for="name">Название каталога: </label>
+                    <input type="text" id="name" th:field="*{name}">
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
 
-                    <label for="description">Описание продукта: </label>
-                    <input type="text" th:field="*{description}" id="description">
+                    <label for="description">Описание каталога: </label>
+                    <input type="text" id="description" th:field="*{description}">
                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description error</span><br>
 
-                    <label for="coast">Цена: </label>
-                    <input type="number" th:field="*{coast}" id="coast">
-                    <span th:if="${#fields.hasErrors('coast')}" th:errors="*{coast}" style="color: red">Coast error</span><br>
-
-                    <label for="select">Категория: </label>
-                    <select id="select" name="select">
-                        <option
-                                th:each="category : ${categoryList}"
-                                th:text="${category.getName()}"
-                                th:value="${category.getId()}"
-                        ></option>
-                    </select>
-                    <br>
-                    <input type="submit" value="Добавить">
+                    <input type="submit" value="Редактировать">
                 </form>
                 <hr>
             </div>

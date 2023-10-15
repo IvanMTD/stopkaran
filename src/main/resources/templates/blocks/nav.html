@@ -1,4 +1,4 @@
-<div>
+<!--<div>
     <ul>
         <li><a th:href="@{/}">Новости Бара</a></li>
         <li><a th:href="@{/catalog/menu}">Меню</a></li>
@@ -7,4 +7,41 @@
         <li><a th:href="@{/admin}">Админ</a></li>
     </ul>
     <hr>
+</div>-->
+
+<div class="p-3 mb-3">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/}" class="nav-link px-2 link-secondary text-light"><i class="bi bi-newspaper text-light" style="font-size: 30px"></i> Новости</a></li>
+                <li><a th:href="@{/catalog/menu}" class="nav-link px-2 link-secondary text-light"><i class="bi bi-menu-app text-light" style="font-size: 30px"></i> Каталог</a></li>
+                <li><a th:href="@{/contact}" class="nav-link px-2 link-secondary text-light"><i class="bi bi-map text-light" style="font-size: 30px"></i> Контакты</a></li>
+                <li><a th:href="@{/about}" class="nav-link px-2 link-secondary text-light"><i class="bi bi-person-circle text-light" style="font-size: 30px"></i> О нас</a></li>
+            </ul>
+
+            <div class="dropdown text-end">
+                <div th:if="!${auth}">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-dash-fill text-light" style="font-size: 32px"></i>
+                    </a>
+
+                    <ul class="dropdown-menu text-small" style="">
+                        <li><a class="dropdown-item" th:href="@{/admin}">Вход</a></li>
+                    </ul>
+                </div>
+                <div th:if="${auth}">
+                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-lines-fill text-light" style="font-size: 32px"></i>
+                    </a>
+
+                    <ul class="dropdown-menu text-small" style="">
+                        <li><a class="dropdown-item" th:href="@{/admin/news}">Работа с новостями</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/catalog}">Работа с категориями</a></li>
+                        <li><a class="dropdown-item" th:href="@{/admin/products}">Работа с продуктами</a></li>
+                        <!--<li><a class="dropdown-item" th:href="@{/logout}">Выход</a></li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -3,6 +3,8 @@ package ru.stopkran.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -66,7 +68,9 @@ public class AdminController {
     public String adminCatalogPage(Model model){
         model.addAttribute("category", new Category());
         List<Category> categories = categoryService.findAll();
-        categories.remove(0);
+        if(categories.size() >= 1) {
+            categories.remove(0);
+        }
         model.addAttribute("categories", categories);
         return "admin/catalog-maker";
     }
@@ -95,15 +99,44 @@ public class AdminController {
     @PostMapping("/catalog/delete")
     public String deleteCatalog(@RequestParam(name = "select") long id){
         Category category = categoryService.findById(id);
-        System.out.println("Категори " + category.getName() + " будет удалена");
         for(Product product : category.getProducts()){
             Product p = productService.findById(product.getId());
-            System.out.println("Продукт " + p.getName() + " будет перенесен в " + categoryService.findById(1).getName());
             p.setCategory(categoryService.findById(1));
             productService.save(p);
-            System.out.println("Перенесено в " + productService.findById(product.getId()).getCategory().getName());
         }
         categoryService.delete(category);
+        return "redirect:/admin";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/catalog/edit")
+    public String editCategory(Model model, @RequestParam(name = "select") long id){
+        model.addAttribute("category",categoryService.findById(id));
+        return "admin/catalog-edit";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/catalog/edit/{id}")
+    public String editCategory(
+            @ModelAttribute(name = "category") @Valid Category category,
+            Errors errors,
+            @RequestPart(name = "file") MultipartFile file,
+            @PathVariable(name = "id") long id
+    ){
+        if(errors.hasErrors()){
+            return "admin/catalog-edit";
+        }
+        Category origin = categoryService.findById(id);
+        if(!file.isEmpty()){
+            try {
+                origin.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        origin.setName(category.getName());
+        origin.setDescription(category.getDescription());
+        categoryService.save(origin);
         return "redirect:/admin";
     }
 
@@ -145,5 +178,23 @@ public class AdminController {
     @ModelAttribute(name = "title")
     public String title(){
         return "Admin Page";
+    }
+
+    @ModelAttribute(name = "logo")
+    public String logo(){
+        return ImageEncryptUtil.loadImage("./src/main/resources/static/images/inverse_default.png");
+    }
+
+    @ModelAttribute(name = "auth")
+    public boolean auth(@AuthenticationPrincipal User user){
+        if(user != null){
+            if(user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 }

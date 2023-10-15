@@ -119,6 +119,11 @@ public class HomeController {
         return "Home Page";
     }
 
+    @ModelAttribute(name = "logo")
+    public String logo(){
+        return ImageEncryptUtil.loadImage("./src/main/resources/static/images/inverse_default.png");
+    }
+
     @ModelAttribute(name = "auth")
     public boolean auth(@AuthenticationPrincipal User user){
         if(user != null){

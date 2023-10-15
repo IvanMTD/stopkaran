@@ -141,4 +141,9 @@ public class CatalogController {
             return false;
         }
     }
+
+    @ModelAttribute(name = "logo")
+    public String logo(){
+        return ImageEncryptUtil.loadImage("./src/main/resources/static/images/inverse_default.png");
+    }
 }
