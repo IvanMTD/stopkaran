@@ -34,7 +34,7 @@ public class CatalogController {
     private int menuNumber;
 
     private int pageNumber;
-    private int pageSize = 6;
+    private int pageSize = 9;
     private int pageTotal;
 
     private int lastPage;

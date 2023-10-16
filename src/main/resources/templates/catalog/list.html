@@ -12,7 +12,7 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <h2 th:text="${category.getName()}"></h2>
+            <!--<h2 th:text="${category.getName()}"></h2>
             <p th:text="${category.getDescription()}"></p>
             <p><a th:href="@{/catalog/menu}">Вернуться</a></p>
 
@@ -45,7 +45,69 @@
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
                 <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
             </div>
-            <p><a th:href="@{/catalog/menu}">Вернуться</a></p>
+            <p><a th:href="@{/catalog/menu}">Вернуться</a></p>-->
+
+            <div class="d-flex gap-2 justify-content-center py-5" th:if="${pageTotal}!=0">
+                <a th:href="@{/catalog/menu}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="Вернуться">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/catalog/menu/list/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="1..">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber-1})}" th:if="${pageNumber} != 0">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber})}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber+1}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageNumber+1})}" th:if="${pageNumber} != ${pageTotal-1}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber+2}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/catalog/menu/list/{pageNumber}(pageNumber=${pageTotal-1})}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="'... ' + ${pageTotal}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+            </div>
+
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col" th:each="product : ${products}">
+                            <div class="card shadow-sm">
+                                <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="100%" height="225"/>
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${product.getName()}"></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a th:href="@{/catalog/{menuNum}/{productNum}(menuNum=${category.getId()},productNum=${product.getId()})}">
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">Описание</button>
+                                            </a>
+                                        </div>
+                                        <small class="text-body-secondary" th:text="'Цена: ' + ${product.getCoast()}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

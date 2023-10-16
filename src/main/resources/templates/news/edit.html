@@ -12,7 +12,7 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <div>
+            <!--<div>
                 <h2>Редактор новостей</h2>
                 <hr>
             </div>
@@ -35,7 +35,41 @@
 
                     <input type="submit" value="Подтвердить">
                 </form>
+            </div>-->
+
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h2>Редактор новостей</h2>
+                                <hr>
+                            </div>
+                            <div>
+                                <form th:method="POST" th:action="@{/news/edit/{id}(id=${news.getId()})}" th:object="${news}" enctype="multipart/form-data">
+                                    <label for="file">Изображение: </label><br>
+                                    <input type="file" accept="image/png" id="file" name="file"><br>
+
+                                    <label for="name">Название новости: </label><br>
+                                    <input type="text" id="name" th:field="*{name}">
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
+
+                                    <label for="annotation">Короткая аннотация: </label><br>
+                                    <input type="text" id="annotation" th:field="*{annotation}">
+                                    <span th:if="${#fields.hasErrors('annotation')}" th:errors="*{annotation}" style="color: red">Annotation error</span><br>
+
+                                    <label for="content">Содержание: </label><br>
+                                    <textarea id="content" cols="40" rows="20" th:field="*{content}"/>
+                                    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color: red">Content error</span><br><br>
+
+                                    <input type="submit" value="Подтвердить">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

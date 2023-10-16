@@ -12,29 +12,41 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <div>
-                <hr>
-                <h2>Редактор каталога</h2>
-                <hr>
+            <div class="d-flex gap-2 justify-content-center py-5" th:if="${pageTotal}!=0">
+                <a th:href="@{/admin/catalog}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="Вернуться">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
             </div>
-            <div>
-                <a th:href="@{/admin}">Вернуться</a>
-                <hr>
-                <form th:method="POST" th:action="@{/admin/catalog/edit/{id}(id=${category.getId()})}" th:object="${category}" enctype="multipart/form-data">
-                    <label for="file">Изображение: </label>
-                    <input type="file" accept="image/png" id="file" name="file"><br>
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <h2>Редактор каталога</h2>
+                                <hr>
+                            </div>
+                            <div>
+                                <form th:method="POST" th:action="@{/admin/catalog/edit/{id}(id=${category.getId()})}" th:object="${category}" enctype="multipart/form-data">
+                                    <label for="file">Изображение: </label><br>
+                                    <input type="file" accept="image/png" id="file" name="file"><br>
 
-                    <label for="name">Название каталога: </label>
-                    <input type="text" id="name" th:field="*{name}">
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
+                                    <label for="name">Название каталога: </label><br>
+                                    <input type="text" id="name" th:field="*{name}">
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name error</span><br>
 
-                    <label for="description">Описание каталога: </label>
-                    <input type="text" id="description" th:field="*{description}">
-                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description error</span><br>
+                                    <label for="description">Описание каталога: </label><br>
+                                    <textarea type="text" id="description" th:field="*{description}" rows="5" cols="50"></textarea>
+                                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red">Description error</span><br><br>
 
-                    <input type="submit" value="Редактировать">
-                </form>
-                <hr>
+                                    <input type="submit" value="Редактировать">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>

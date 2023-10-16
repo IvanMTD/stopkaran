@@ -1,13 +1,20 @@
 package ru.stopkran.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.descriptor.web.ContextHandler;
+import org.springframework.boot.actuate.endpoint.SecurityContext;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -29,7 +36,7 @@ public class HomeController {
     private final NewsService newsService;
 
     private int pageNumber = 0;
-    private int pageSize = 6;
+    private int pageSize = 3;
     private int pageTotal;
 
     private int lastPage;
@@ -112,6 +119,13 @@ public class HomeController {
     @GetMapping("/login")
     public String loginPage(){
         return "admin/login";
+    }
+
+    @GetMapping("/logout")
+    public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, authentication);
+        return "redirect:/";
     }
 
     @ModelAttribute(name = "title")

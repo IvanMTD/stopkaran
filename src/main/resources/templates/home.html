@@ -12,29 +12,61 @@
         <header th:insert="~{blocks/header}"></header>
         <nav th:insert="~{blocks/nav}"></nav>
         <main>
-            <h1>Новости Бара</h1>
-            <div th:if="${pageTotal}!=0">
-                <a th:href="@{/news/page/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
-            </div>
-            <div th:each="news : ${newsList}">
-                <hr>
-                <a th:href="@{/news/{id}(id=${news.getId()})}">
-                    <img th:src="'data:image/png;base64,' + ${news.getImage()}" width="200px" height="200px"/>
-                    <h2 th:text="${news.getName()}"></h2>
-                    <p th:text="${news.getAnnotation()}"></p>
+            <div class="d-flex gap-2 justify-content-center py-5" th:if="${pageTotal}!=0">
+                <a th:href="@{/news/page/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="1..">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
                 </a>
-                <hr>
+                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber-1})}" th:if="${pageNumber} != 0">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber})}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber+1}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber+1})}" th:if="${pageNumber} != ${pageTotal-1}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="${pageNumber+2}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
+                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageTotal-1})}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}">
+                    <button class="btn btn-outline-secondary d-inline-flex align-items-center" type="button" th:text="'... ' + ${pageTotal}">
+                        button
+                        <svg class="bi ms-1" width="20" height="20"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </a>
             </div>
-            <div th:if="${pageTotal}!=0">
-                <a th:href="@{/news/page/0}" th:if="${pageNumber}!=0 and ${pageNumber}!=1">1 ...</a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber-1})}" th:text="${pageNumber}" th:if="${pageNumber} != 0"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber})}" th:text="${pageNumber+1}"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageNumber+1})}" th:text="${pageNumber+2}" th:if="${pageNumber} != ${pageTotal-1}"></a>
-                <a th:href="@{/news/page/{pageNumber}(pageNumber=${pageTotal-1})}" th:text="'... ' + ${pageTotal}" th:if="${pageNumber} != ${pageTotal-1} and ${pageNumber} != ${pageTotal-2}"></a>
+            <div class="album py-5 bg-body-tertiary">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12" th:each="news : ${newsList}">
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-8 shadow-sm position-relative">
+                                <div class="col p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-primary-emphasis">Новости бара</strong>
+                                    <h3 class="mb-0" th:text="${news.getName()}">Featured post</h3>
+                                    <div class="mb-1 text-body-secondary" th:text="${news.getPlacedAt()}">Date</div>
+                                    <p class="card-text mb-auto" th:text="${news.getAnnotation()}">Text</p>
+                                    <a th:href="@{/news/{id}(id=${news.getId()})}" class="icon-link gap-1 icon-link-hover stretched-link">
+                                        Прочитать
+                                        <svg class="bi"><use xlink:href="#chevron-right"></use></svg>
+                                    </a>
+                                </div>
+                                <div class="col-auto d-none d-lg-block">
+                                    <img th:src="'data:image/png;base64,' + ${news.getImage()}" width="200px" height="200px"/>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         <footer th:insert="~{blocks/footer}"></footer>
