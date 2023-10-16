@@ -82,7 +82,7 @@ public class AdminController {
             return "admin/catalog-maker";
         }
         if(file.isEmpty()){
-            category.setImage(ImageEncryptUtil.loadImage("./src/main/resources/static/images/inverse_default.png"));
+            category.setImage(ImageEncryptUtil.loadImage("./src/main/resources/static/images/default.png"));
         }else{
             try {
                 category.setImage(ImageEncryptUtil.getImgData(file.getBytes()));
@@ -162,7 +162,7 @@ public class AdminController {
             return "admin/product-maker";
         }
         if(file.isEmpty()){
-            product.setImage(ImageEncryptUtil.loadImage("./src/main/resources/static/images/inverse_default.png"));
+            product.setImage(ImageEncryptUtil.loadImage("./src/main/resources/static/images/default.png"));
         }else{
             try {
                 product.setImage(ImageEncryptUtil.getImgData(file.getBytes()));

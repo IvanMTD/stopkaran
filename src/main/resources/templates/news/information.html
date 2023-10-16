@@ -38,7 +38,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12">
-              <img th:src="'data:image/png;base64,' + ${news.getImage()}" width="255px" height="255px"/>
+              <img th:src="'data:image/png;base64,' + ${news.getImage()}" width="30%" height="50%"/>
               <hr>
               <i><p th:text="${news.getPlacedAt()}" style="font-size: 12px"></p></i>
               <h2 th:text="${news.getName()}"></h2>
