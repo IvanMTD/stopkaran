@@ -17,7 +17,7 @@ public class NewsService {
 
 
     public List<News> findAllNewsByPageableSort(Pageable pageable) {
-        return newsRepository.findAll(pageable);
+        return newsRepository.findAllByOrderByPlacedAtDesc(pageable);
     }
 
     public List<News> findAll() {

@@ -37,13 +37,12 @@
             <div class="album py-5 bg-body-tertiary">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col">
                             <img th:src="'data:image/png;base64,' + ${product.getImage()}" width="50%" height="60%"/>
                             <h2 th:text="${product.getName()}"></h2>
                             <p th:text="${product.getDescription()}"></p>
-                            <br>
                             <hr>
-                            <p th:text="'Цена: ' + ${product.getCoast()}"></p>
+                            <b><p th:text="'Цена: ' + ${product.getCoast()}"></p></b>
                         </div>
                     </div>
                 </div>
