@@ -1,8 +1,8 @@
 #map {
     overflow: hidden;
     /* height: calc(100% - 40px); */
-    width: 640px;
-    height: 480px;
+    width: 50vw;
+    height: 30vw;
 
     border: 2px solid #ccc;
 }

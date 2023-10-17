@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.stopkran</groupId>
-	<artifactId>stopkaran</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>stopkaran</name>
+	<artifactId>stopkran</artifactId>
+	<version>1.0.1</version>
+	<name>stopkran</name>
 	<description>stopkaran</description>
 	<properties>
 		<java.version>17</java.version>

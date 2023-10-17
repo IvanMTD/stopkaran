@@ -1,4 +1,4 @@
-create table news (
+create table if not exists news (
     id long primary key auto_increment,
     name text not null,
     annotation text not null,
@@ -7,14 +7,14 @@ create table news (
     placed_at timestamp not null
 );
 
-create table category (
+create table if not exists category (
     id long primary key auto_increment,
     name text not null,
     description text not null,
     image text not null
 );
 
-create table product (
+create table if not exists product (
     id long primary key auto_increment,
     category_id long,
     name text not null,
